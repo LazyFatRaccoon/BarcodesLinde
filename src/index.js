@@ -1,5 +1,8 @@
+if (process.env.NODE_ENV !== "production") {
+  await import("dotenv/config"); // підтягує .env лише локально
+}
+
 import app from "./app.js";
-import "dotenv/config";
 import { PORT } from "./config.js";
 import { connectDB } from "./db.js";
 
@@ -13,5 +16,4 @@ async function main() {
     console.error(error);
   }
 }
-
 main();
