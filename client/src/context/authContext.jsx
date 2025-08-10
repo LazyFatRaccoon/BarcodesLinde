@@ -17,6 +17,23 @@ export const AuthProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        setLoading(true);
+        const { data } = await verifyTokenRequest(); // GET /api/auth/verify
+        if (mounted) setUser(data); // {id, username, email, role}
+      } catch {
+        if (mounted) setUser(null);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
   // clear errors after 5 seconds
   useEffect(() => {
     if (errors.length > 0) {
