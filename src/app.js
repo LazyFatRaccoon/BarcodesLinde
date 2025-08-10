@@ -26,6 +26,7 @@ app.use("/api/assets", assetRoutes);
 app.use("/api/barcodes", barcodeRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", taksRoutes);
+app.get("/api/health", (req, res) => res.json({ ok: true }));
 
 if (process.env.NODE_ENV === "production") {
   const path = await import("path");
