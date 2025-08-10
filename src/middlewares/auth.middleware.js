@@ -1,14 +1,15 @@
 import jwt from "jsonwebtoken";
 import { TOKEN_SECRET } from "../config.js";
 
-export const auth = (req, res, next) => {
+export const authRequired = (req, res, next) => {
   try {
     const { token } = req.cookies;
 
-    if (!token)
+    if (!token) {
       return res
         .status(401)
         .json({ message: "No token, authorization denied" });
+    }
 
     jwt.verify(token, TOKEN_SECRET, (error, user) => {
       if (error) {
@@ -21,3 +22,6 @@ export const auth = (req, res, next) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+// Додаємо друге ім'я для сумісності зі старими імпортами
+export const auth = authRequired;

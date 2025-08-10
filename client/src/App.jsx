@@ -5,6 +5,8 @@ import { ProtectedRoute } from "./routes";
 
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
+import { GeneratePage } from "./pages/Generate";
+import { ScanPage } from "./pages/Scan";
 import { TaskFormPage } from "./pages/TaskFormPage";
 import { LoginPage } from "./pages/LoginPage";
 import { TasksPage } from "./pages/TasksPage";
@@ -22,6 +24,8 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route element={<ProtectedRoute />}>
+                <Route path="/scan" element={<ScanPage />} />
+                <Route path="/generate" element={<GeneratePage />} />
                 <Route path="/tasks" element={<TasksPage />} />
                 <Route path="/add-task" element={<TaskFormPage />} />
                 <Route path="/tasks/:id" element={<TaskFormPage />} />
