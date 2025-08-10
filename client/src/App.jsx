@@ -12,17 +12,23 @@ import { LoginPage } from "./pages/LoginPage";
 import { TasksPage } from "./pages/TasksPage";
 import { TaskProvider } from "./context/tasksContext";
 import AdminUsersPage from "./pages/AdminUsers";
+import ChangePasswordPage from "./pages/ChangePassword";
+import AssetsPage from "./pages/Assets";
+import ForgotPasswordPage from "./pages/ForgotPassword";
+import ResetPasswordPage from "./pages/ResetPassword";
 
 function App() {
   return (
     <AuthProvider>
       <TaskProvider>
         <BrowserRouter>
-          <main className="container content-container mx-auto px-10 md:px-0">
+          <main className="container content-container mx-auto px-1 md:px-0">
             <Navbar />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route element={<ProtectedRoute />}>
                 <Route
@@ -31,6 +37,7 @@ function App() {
                 />
                 <Route path="/admin/users" element={<AdminUsersPage />} />
                 <Route path="/scan" element={<ScanPage />} />
+                <Route path="/assets" element={<AssetsPage />} />
                 <Route path="/generate" element={<GeneratePage />} />
                 <Route path="/tasks" element={<TasksPage />} />
                 <Route path="/add-task" element={<TaskFormPage />} />

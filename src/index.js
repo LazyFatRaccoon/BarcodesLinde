@@ -6,11 +6,13 @@ import app from "./app.js";
 import { PORT } from "./config.js";
 import { connectDB } from "./db.js";
 import { ensureDefaultAdmin } from "./seed/admin.seed.js";
+import { verifyMailer } from "./utils/mailer.js";
 
 async function main() {
   try {
     await connectDB();
     await ensureDefaultAdmin();
+    await verifyMailer();
     app.listen(PORT);
     console.log(`Listening on port http://localhost:${PORT}`);
     console.log(`Environment: ${process.env.NODE_ENV}`);

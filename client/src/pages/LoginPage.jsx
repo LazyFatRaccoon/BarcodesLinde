@@ -56,9 +56,17 @@ export function LoginPage() {
           <Button>Login</Button>
         </form>
 
-        <p className="flex gap-x-2 justify-between">
-          Don't have an account? <Link to="/register" className="text-sky-500">Sign up</Link>
-        </p>
+        <div className="mt-3 flex justify-between text-sm">
+          <Link to="/forgot-password" className="text-sky-500">
+            Забули пароль?
+          </Link>
+          <span>
+            Немає акаунта?{" "}
+            <Link to="/register" className="text-sky-500">
+              Зареєструватись
+            </Link>
+          </span>
+        </div>
       </Card>
     </div>
   );

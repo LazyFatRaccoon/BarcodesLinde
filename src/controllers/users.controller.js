@@ -1,6 +1,7 @@
 // src/controllers/users.controller.js
 import bcrypt from "bcryptjs";
 import User, { ROLES } from "../models/user.model.js";
+import { sendInviteEmail } from "../utils/mailer.js";
 
 const normalizeEmail = (email) =>
   String(email || "")
@@ -29,7 +30,10 @@ export const createUserByAdmin = async (req, res, next) => {
     });
 
     // відправляємо лист
-    const loginUrl = `${req.protocol}://${req.get("host")}/login`;
+    //const loginUrl = `${req.protocol}://${req.get("host")}/login`;
+    const loginUrl = process.env.FRONTEND_URL
+      ? `${process.env.FRONTEND_URL}/login`
+      : `http://localhost:5173/login`;
     try {
       await sendInviteEmail(user.email, {
         username: user.username,
@@ -55,9 +59,11 @@ export const createUserByAdmin = async (req, res, next) => {
 export const changePassword = async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body || {};
-    if (!newPassword)
-      return res.status(400).json({ message: "New password required" });
-
+    if (!newPassword || newPassword.length < 6) {
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 chars" });
+    }
     const user = await User.findById(req.user.id);
     if (!user) return res.sendStatus(401);
 

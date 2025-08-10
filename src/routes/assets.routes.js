@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Asset from "../models/asset.model.js";
 import Event from "../models/event.model.js"; // переконайся, що файл існує!
-import { authRequired } from "../middlewares/auth.middleware.js";
+import { authRequired, requireRole } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
@@ -81,16 +81,49 @@ router.put("/:id", authRequired, async (req, res, next) => {
   }
 });
 
-// GET /api/assets/:id/history
-router.get("/:id/history", authRequired, async (req, res, next) => {
-  try {
-    const events = await Event.find({ asset_id: req.params.id }).sort({
-      createdAt: -1,
-    });
-    res.json(events);
-  } catch (e) {
-    next(e);
+router.get(
+  "/",
+  authRequired,
+  requireRole("admin", "manager"),
+  async (req, res) => {
+    const { type, page = 1, limit = 20, q } = req.query;
+    const filter = {};
+    if (type) filter.type = type;
+    if (q) {
+      filter.$or = [
+        { barcode: new RegExp(q, "i") },
+        { cylinder_no: new RegExp(q, "i") },
+        { owner: new RegExp(q, "i") },
+        { location: new RegExp(q, "i") },
+      ];
+    }
+    const skip = (Number(page) - 1) * Number(limit);
+    const [items, total] = await Promise.all([
+      Asset.find(filter)
+        .sort({ updatedAt: -1 })
+        .skip(skip)
+        .limit(Number(limit)),
+      Asset.countDocuments(filter),
+    ]);
+    res.json({ items, total, page: Number(page), limit: Number(limit) });
   }
-});
+);
+
+// GET /api/assets/:id/events
+router.get(
+  "/:id/events",
+  authRequired,
+  requireRole("admin", "manager"),
+  async (req, res) => {
+    try {
+      const list = await Event.find({ asset_id: req.params.id }).sort({
+        createdAt: -1,
+      });
+      res.json(list);
+    } catch (e) {
+      next(e);
+    }
+  }
+);
 
 export default router;
