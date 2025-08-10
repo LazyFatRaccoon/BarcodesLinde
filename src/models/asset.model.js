@@ -1,5 +1,14 @@
 import mongoose from "mongoose";
 
+assetSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform(doc, ret) {
+    ret.id = ret._id; // дублюємо _id в id
+    delete ret._id;
+  },
+});
+
 const assetSchema = new mongoose.Schema(
   {
     barcode: { type: String, unique: true, index: true, required: true },

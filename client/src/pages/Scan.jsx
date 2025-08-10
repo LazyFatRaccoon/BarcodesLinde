@@ -65,12 +65,24 @@ export function ScanPage() {
   };
 
   const save = async () => {
-    if (asset?.id) {
-      await axios.put(`/assets/${asset.id}`, form);
-      alert("Збережено");
-    } else {
-      await axios.post(`/assets`, form);
-      alert("Додано");
+    try {
+      const id = asset?._id || form?._id; // <-- беремо _id
+      const payload = { ...form };
+
+      // якщо поля дат можуть бути пустими — нормалізуємо
+      if (!payload.test_date) payload.test_date = null;
+      if (!payload.next_test_date) payload.next_test_date = null;
+
+      const { data } = id
+        ? await axios.put(`/assets/${id}`, payload) // оновлення
+        : await axios.post(`/assets`, payload); // створення
+
+      setAsset(data);
+      setForm(data);
+      alert(id ? "Збережено" : "Додано");
+    } catch (e) {
+      const msg = e.response?.data?.message || e.message;
+      alert("Помилка збереження: " + msg);
     }
   };
 
