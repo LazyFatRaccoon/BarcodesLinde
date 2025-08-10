@@ -28,6 +28,12 @@ app.use("/api/auth", authRoutes);
 app.use("/api", taksRoutes);
 app.get("/api/health", (req, res) => res.json({ ok: true }));
 
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  const status = err.status || 500;
+  res.status(status).json({ message: err.message || "Internal server error" });
+});
+
 if (process.env.NODE_ENV === "production") {
   const path = await import("path");
   app.use(express.static("client/dist"));
