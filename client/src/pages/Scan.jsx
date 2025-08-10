@@ -12,10 +12,9 @@ export function ScanPage() {
 
   const startScan = async () => {
     readerRef.current = new BrowserMultiFormatReader();
-    const devices = await readerRef.current.listVideoInputDevices();
-    const deviceId = devices[0]?.deviceId;
+
     await readerRef.current.decodeFromVideoDevice(
-      deviceId,
+      null,
       videoRef.current,
       (res) => {
         if (res) {
