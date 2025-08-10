@@ -11,6 +11,7 @@ import { TaskFormPage } from "./pages/TaskFormPage";
 import { LoginPage } from "./pages/LoginPage";
 import { TasksPage } from "./pages/TasksPage";
 import { TaskProvider } from "./context/tasksContext";
+import AdminUsersPage from "./pages/AdminUsers";
 
 function App() {
   return (
@@ -24,6 +25,11 @@ function App() {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route element={<ProtectedRoute />}>
+                <Route
+                  path="/change-password"
+                  element={<ChangePasswordPage />}
+                />
+                <Route path="/admin/users" element={<AdminUsersPage />} />
                 <Route path="/scan" element={<ScanPage />} />
                 <Route path="/generate" element={<GeneratePage />} />
                 <Route path="/tasks" element={<TasksPage />} />

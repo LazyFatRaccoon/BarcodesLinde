@@ -4,6 +4,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
 import authRoutes from "./routes/auth.routes.js";
+import usersRoutes from "./routes/users.routes.js";
 import taksRoutes from "./routes/tasks.routes.js";
 import assetRoutes from "./routes/assets.routes.js";
 import barcodeRoutes from "./routes/barcodes.routes.js";
@@ -24,6 +25,7 @@ app.use(cookieParser());
 
 app.use("/api/assets", assetRoutes);
 app.use("/api/barcodes", barcodeRoutes);
+app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api", taksRoutes);
 app.get("/api/health", (req, res) => res.json({ ok: true }));
