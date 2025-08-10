@@ -24,4 +24,14 @@ const assetSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// 🔹 Додаємо, щоб на фронт йшло `id` замість `_id`
+assetSchema.set("toJSON", {
+  virtuals: true,
+  versionKey: false,
+  transform(doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+  },
+});
+
 export default mongoose.model("Asset", assetSchema);
