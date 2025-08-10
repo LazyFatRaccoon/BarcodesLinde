@@ -10,6 +10,11 @@ export function ScanPage() {
   const videoRef = useRef(null);
   const readerRef = useRef(null);
 
+  const formatDate = (date) => {
+    if (!date) return "";
+    return new Date(date).toISOString().split("T")[0];
+  };
+
   const startScan = async () => {
     readerRef.current = new BrowserMultiFormatReader();
 
@@ -78,7 +83,7 @@ export function ScanPage() {
           Сканувати камерою
         </button>
         <input
-          className="input"
+          className="input text-black"
           placeholder="Або введіть код вручну"
           value={code}
           onChange={(e) => setCode(e.target.value)}
@@ -102,12 +107,16 @@ export function ScanPage() {
           <div className="grid md:grid-cols-2 gap-2">
             <label>
               Штрихкод
-              <input className="input" value={form.barcode} readOnly />
+              <input
+                className="input text-black"
+                value={form.barcode}
+                readOnly
+              />
             </label>
             <label>
               Тип актива
               <select
-                className="input"
+                className="input text-black"
                 value={form.type}
                 onChange={(e) => setForm({ ...form, type: e.target.value })}
               >
@@ -124,7 +133,7 @@ export function ScanPage() {
                 <label>
                   Номер балона
                   <input
-                    className="input"
+                    className="input text-black"
                     value={form.cylinder_no || ""}
                     onChange={(e) =>
                       setForm({ ...form, cylinder_no: e.target.value })
@@ -134,7 +143,7 @@ export function ScanPage() {
                 <label>
                   Тип балона
                   <input
-                    className="input"
+                    className="input text-black"
                     value={form.cylinder_kind || ""}
                     onChange={(e) =>
                       setForm({ ...form, cylinder_kind: e.target.value })
@@ -144,7 +153,7 @@ export function ScanPage() {
                 <label>
                   Заповнений?
                   <select
-                    className="input"
+                    className="input text-black"
                     value={form.is_filled}
                     onChange={(e) =>
                       setForm({ ...form, is_filled: e.target.value === "true" })
@@ -158,7 +167,7 @@ export function ScanPage() {
                   <label>
                     Код продукції
                     <input
-                      className="input"
+                      className="input text-black"
                       value={form.product_code || ""}
                       onChange={(e) =>
                         setForm({ ...form, product_code: e.target.value })
@@ -170,8 +179,8 @@ export function ScanPage() {
                   Дата освідчення
                   <input
                     type="date"
-                    className="input"
-                    value={form.test_date || ""}
+                    className="input text-black"
+                    value={formatDate(form.test_date) || ""}
                     onChange={(e) =>
                       setForm({ ...form, test_date: e.target.value })
                     }
@@ -181,8 +190,8 @@ export function ScanPage() {
                   Наступне освідчення
                   <input
                     type="date"
-                    className="input"
-                    value={form.next_test_date || ""}
+                    className="input text-black"
+                    value={formatDate(form.next_test_date) || ""}
                     onChange={(e) =>
                       setForm({ ...form, next_test_date: e.target.value })
                     }
@@ -191,7 +200,7 @@ export function ScanPage() {
                 <label>
                   Вага порожнього
                   <input
-                    className="input"
+                    className="input text-black"
                     type="number"
                     step="0.01"
                     value={form.tare_weight || ""}
@@ -203,7 +212,7 @@ export function ScanPage() {
                 <label>
                   Тестовий тиск
                   <input
-                    className="input"
+                    className="input text-black"
                     type="number"
                     step="0.1"
                     value={form.test_pressure || ""}
@@ -218,7 +227,7 @@ export function ScanPage() {
                 <label>
                   Робочий тиск
                   <input
-                    className="input"
+                    className="input text-black"
                     type="number"
                     step="0.1"
                     value={form.work_pressure || ""}
@@ -236,7 +245,7 @@ export function ScanPage() {
             <label>
               Локація
               <input
-                className="input"
+                className="input text-black"
                 value={form.location || ""}
                 onChange={(e) => setForm({ ...form, location: e.target.value })}
               />
@@ -244,7 +253,7 @@ export function ScanPage() {
             <label>
               Власник
               <input
-                className="input"
+                className="input text-black"
                 value={form.owner || ""}
                 onChange={(e) => setForm({ ...form, owner: e.target.value })}
               />
