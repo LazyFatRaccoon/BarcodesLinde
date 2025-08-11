@@ -66,7 +66,8 @@ export function ScanPage() {
 
   const save = async () => {
     try {
-      const id = asset?._id || form?._id; // <-- беремо _id
+      const id = asset?._id || form?.id; // <-- беремо _id
+      console.log("id", id);
       const payload = { ...form };
 
       // якщо поля дат можуть бути пустими — нормалізуємо

@@ -28,16 +28,20 @@ export function Navbar() {
   return (
     <nav className="bg-zinc-700 my-3 flex items-center justify-between py-3 px-4 md:px-10 rounded-lg text-white">
       <div className="flex items-center gap-1 sm:gap-3">
-        <NavItem
-          to={isAuthenticated ? "/scan" : "/"}
-          icon={ScanLine}
-          label="Scanner"
-        />
-        <NavItem
-          to={isAuthenticated ? "/generate" : "/"}
-          icon={Barcode}
-          label="Barcodes"
-        />
+        {isAuthenticated && (
+          <NavItem
+            to={isAuthenticated ? "/scan" : "/"}
+            icon={ScanLine}
+            label="Scanner"
+          />
+        )}
+        {isAuthenticated && (
+          <NavItem
+            to={isAuthenticated ? "/generate" : "/"}
+            icon={Barcode}
+            label="Barcodes"
+          />
+        )}
 
         {/* Адмінське меню */}
         {isAuthenticated && user?.role === "admin" && (

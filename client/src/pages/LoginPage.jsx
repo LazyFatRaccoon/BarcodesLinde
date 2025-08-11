@@ -60,12 +60,12 @@ export function LoginPage() {
           <Link to="/forgot-password" className="text-sky-500">
             Забули пароль?
           </Link>
-          <span>
+          {/* <span>
             Немає акаунта?{" "}
             <Link to="/register" className="text-sky-500">
               Зареєструватись
             </Link>
-          </span>
+          </span> */}
         </div>
       </Card>
     </div>

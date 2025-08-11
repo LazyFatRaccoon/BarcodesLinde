@@ -9,7 +9,7 @@ export default function ChangePasswordPage() {
   const submit = async (e) => {
     e.preventDefault();
     if (newPassword.length < 6) return setMsg("Мінімум 6 символів");
-    if (newPassword !== confirm) return setMsg("Паролі не співпадають");
+    //if (newPassword !== confirm) return setMsg("Паролі не співпадають");
     setMsg("");
     try {
       await axios.post("/users/change-password", { oldPassword, newPassword });
