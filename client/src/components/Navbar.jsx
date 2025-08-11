@@ -1,60 +1,92 @@
-// components/Navbar.jsx
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/authContext";
 import { ButtonLink } from "./ui/ButtonLink";
+import {
+  ScanLine,
+  Barcode,
+  Users,
+  Boxes,
+  KeyRound,
+  LogOut,
+} from "lucide-react";
 
 export function Navbar() {
   const { isAuthenticated, logout, user } = useAuth();
 
+  // утиліта: рендер іконки + тексту (іконка на xs, текст з sm і вище)
+  const NavItem = ({ to, icon: Icon, label }) => (
+    <Link
+      to={to}
+      className="flex items-center gap-2 px-2 py-1 rounded hover:bg-zinc-600 transition"
+      title={label}
+    >
+      <Icon className="h-5 w-5 sm:hidden" /> {/* іконка на мобілці */}
+      <span className="hidden sm:inline text-m font-bold">{label}</span>
+    </Link>
+  );
+
   return (
-    <nav className="bg-zinc-700 my-3 flex items-center justify-between py-5 px-10 rounded-lg text-white">
-      <div className="flex items-center gap-3">
-        <span className="text-m font-bold">
-          <Link to={isAuthenticated ? "/scan" : "/"}>Scanner</Link>
-        </span>
-        <span className="text-m font-bold">
-          <Link to={isAuthenticated ? "/generate" : "/"}>Barcodes</Link>
-        </span>
+    <nav className="bg-zinc-700 my-3 flex items-center justify-between py-3 px-4 md:px-10 rounded-lg text-white">
+      <div className="flex items-center gap-1 sm:gap-3">
+        <NavItem
+          to={isAuthenticated ? "/scan" : "/"}
+          icon={ScanLine}
+          label="Scanner"
+        />
+        <NavItem
+          to={isAuthenticated ? "/generate" : "/"}
+          icon={Barcode}
+          label="Barcodes"
+        />
 
         {/* Адмінське меню */}
         {isAuthenticated && user?.role === "admin" && (
-          <span className="text-m font-bold">
-            <Link to="/admin/users">Users</Link>
-          </span>
+          <NavItem to="/admin/users" icon={Users} label="Users" />
         )}
+
         {isAuthenticated &&
           (user?.role === "admin" || user?.role === "manager") && (
-            <span className="text-m font-bold">
-              <Link to="/assets">Assets</Link>
-            </span>
+            <NavItem to="/assets" icon={Boxes} label="Assets" />
           )}
       </div>
 
-      <ul className="flex items-center gap-x-4">
+      <ul className="flex items-center gap-2 sm:gap-4">
         {isAuthenticated ? (
           <>
-            <li className="opacity-90">Welcome {user?.username}</li>
-            {/* Якщо задачі ще потрібні */}
-            {/* <li><ButtonLink to="/add-task">Add Task</ButtonLink></li> */}
+            <li className="hidden sm:block opacity-90">{user?.username}</li>
 
-            {/* Зміна пароля доступна всім залогіненим */}
+            {/* Change password */}
             <li>
-              <ButtonLink to="/change-password">Change password</ButtonLink>
+              <Link
+                to="/change-password"
+                className="flex items-center gap-2 px-2 py-1 rounded hover:bg-zinc-600 transition"
+                title="Change password"
+              >
+                <KeyRound className="h-5 w-5 sm:hidden" />
+                <span className="hidden sm:inline">Change password</span>
+              </Link>
             </li>
 
+            {/* Logout */}
             <li>
-              <Link to="/" onClick={logout}>
-                Logout
-              </Link>
+              <button
+                onClick={logout}
+                className="flex items-center gap-2 px-2 py-1 rounded hover:bg-zinc-600 transition"
+                title="Logout"
+              >
+                <LogOut className="h-5 w-5 sm:hidden" />
+                <span className="hidden sm:inline">Logout</span>
+              </button>
             </li>
           </>
         ) : (
           <>
             <li>
-              <ButtonLink to="/login">Login</ButtonLink>
+              <ButtonLink to="/login">
+                <span className="hidden sm:inline">Login</span>
+                {/* Можна додати іконку для xs, якщо хочеш */}
+              </ButtonLink>
             </li>
-            {/* Якщо самореєстрацію вимкнули, сховай лінк нижче */}
-            {/* <li><ButtonLink to="/register">Register</ButtonLink></li> */}
           </>
         )}
       </ul>

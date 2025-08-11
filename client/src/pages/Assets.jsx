@@ -35,7 +35,7 @@ export default function AssetsPage() {
   };
 
   return (
-    <div className="p-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="p-1 grid grid-cols-1 md:grid-cols-3 gap-2">
       <div className="md:col-span-2">
         <div className="flex gap-2 mb-3">
           <select
@@ -60,12 +60,12 @@ export default function AssetsPage() {
         <table className="w-full text-sm border">
           <thead className="bg-zinc-100 text-black">
             <tr>
-              <th className="p-2 text-left">Barcode</th>
-              <th className="p-2 text-left">Тип</th>
-              <th className="p-2 text-left">Номер</th>
-              <th className="p-2 text-left">Продукт</th>
-              <th className="p-2 text-left">Локація</th>
-              <th className="p-2 text-left">Оновлено</th>
+              <th className="p-1 text-left">Barcode</th>
+              <th className="p-1 text-left">Тип</th>
+              <th className="p-1 text-left">Номер</th>
+              <th className="p-1 text-left">Продукт</th>
+              <th className="p-1 text-left">Склад</th>
+              <th className="p-1 text-left">Оновлено</th>
             </tr>
           </thead>
           <tbody>
@@ -75,12 +75,12 @@ export default function AssetsPage() {
                 className="border-b hover:bg-zinc-50 cursor-pointer"
                 onClick={() => openRow(r)}
               >
-                <td className="p-2">{r.barcode}</td>
-                <td className="p-2">{r.type}</td>
-                <td className="p-2">{r.cylinder_no || "-"}</td>
-                <td className="p-2">{r.product_code || "-"}</td>
-                <td className="p-2">{r.location || "-"}</td>
-                <td className="p-2">
+                <td className="p-1">{r.barcode}</td>
+                <td className="p-1">{r.type}</td>
+                <td className="p-1">{r.cylinder_no || "-"}</td>
+                <td className="p-1">{r.product_code || "-"}</td>
+                <td className="p-1">{r.location || "-"}</td>
+                <td className="p-1">
                   {new Date(r.updatedAt).toLocaleString()}
                 </td>
               </tr>
